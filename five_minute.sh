@@ -13,6 +13,7 @@ if [ "$EUID" -ne 0 ]
 fi
 
 $s = sudo 
+$p = "password123\npassword123\n"
 
 debian() {
   # Stop Bash History Logging
@@ -23,7 +24,7 @@ debian() {
 
   # Change Passwords
   echo "> Changing Passwords"
-  for i in $(getent passwd | grep -v -E 'root|admin' | cut -d':' -f1); do echo -e 'password123\npassword123\n' | passwd $i; done
+  for i in $(getent passwd | grep -v -E 'root|admin' | cut -d':' -f1); do echo -e $p | passwd $i; done
   history -c
 
   # Create Backup admin Account

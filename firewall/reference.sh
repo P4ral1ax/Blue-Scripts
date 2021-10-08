@@ -55,8 +55,9 @@ iptables -t mangle -A OUTPUT -p tcp --sport ssh -m state --state ESTABLISHED -j 
 # # Iptables Ranges
 # iptables -t mangle -A INPUT -s 10.5.1.0/24 -j ACCEPT
 # iptables -t mangle -A INPUT -s 10.5.2.0/24 -j ACCEPT
-# iptables -t mangle -A INPUT -s 10.x.x.0/24 -j DENY
-# iptables -t mangle -A OUTPUT -s 10.x.x.0/24 -j DENY
+# iptables -t mangle -A INPUT -s 10.x.x.0/24 -j DROP
+# iptables -t mangle -A OUTPUT -s 10.x.x.0/24 -j DROP
+# iptables -t mangle -A INPUT -s 10.2.3.4 -j DROP
 
 # # Allow HTTP Outgoing
 # echo "> Allow Outbound HTTP"
@@ -84,11 +85,12 @@ iptables -t mangle -A OUTPUT -p tcp --sport ssh -m state --state ESTABLISHED -j 
 # iptables -t mangle -A INPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
 
 # # Accept Various Port Incoming
-# echo "> Allow Inbound Mayan MDMS"
+# echo "> Various Port Incoming"
 # iptables -t mangle -A INPUT -p tcp --dport 8000 -m state --state NEW,ESTABLISHED -j ACCEPT
 # iptables -t mangle -A OUTPUT -p tcp --sport 8000 -m state --state ESTABLISHED -j ACCEPT
 
 # # Allow Various Port Outgoing
+# echo "> Various Port Outgoing"
 # iptables -t mangle -A OUTPUT -p udp --dport 3000 -m state --state NEW,ESTABLISHED -j ACCEPT
 # iptables -t mangle -A INPUT  -p udp --sport 3000 -m state --state ESTABLISHED -j ACCEPT
 

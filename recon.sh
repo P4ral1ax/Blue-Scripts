@@ -45,6 +45,7 @@ basic(){
     sleep $t
 
     echo -e "\n--------------\n > SSH Keys <\n-------------- "
+    # TODO - LIST THE KEY NAMES / NUMBER OF KEYS
     $s cat /root/ssh/sshd_config | grep -i AuthorizedKeysFile
     $s cat /home/*/.ssh/authorized_keys*
     $s cat /root/.ssh/authorized_keys*
@@ -72,7 +73,7 @@ basic(){
     sleep $t
 
     echo -e "\n-----------------------\n > Mounted Processes <\n----------------------- "
-    $s mount | grep "/proc"
+    $s mount | grep "proc"
     sleep $t
 
 }
@@ -97,11 +98,13 @@ verbose(){
     echo -e "\n-------------------------\n > Poisoned Networking <\n------------------------- "
     $s cat /etc/nsswitch.conf
     $s cat /etc/hosts
+    $s cat /etc/resolv.conf | grep -Ev '#|PATH|SHELL'
     $s ip netns list
+    $s ip route
     sleep $t
 
     echo -e "\n---------------\n > Services <\n--------------- "
-    $s systemctl --type=service | cat
+    $s find /etc/systemd/system -name "*.service" -exec cat {} + | grep -E "ExecStart|Description" | sed "s/Description/\nDescription/g" | cut -d "=" -f2 
     sleep $t
 
     echo -e "\n--------------------\n > Auth Backdoors <\n-------------------- "
@@ -138,6 +141,3 @@ else
   verbose
   exit 0
 fi
-
-
-
