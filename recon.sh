@@ -37,11 +37,15 @@ basic(){
     alias
     sleep $t
 
-    echo -e "\n---------------------\n > Checking Shells <\n---------------------"
+    echo -e "\n---------------------\n > Checking for Shims <\n---------------------"
     diff /bin/false /bin/sh
     diff /bin/false /bin/bash    
     diff /usr/sbin/nologin /bin/sh
-    diff /usr/sbin/nologin /bin/bash
+    diff /usr/sbin/passwd /bin/passwd
+    diff /usr/sbin/ls /bin/ls
+    diff /usr/sbin/sudo /bin/sudo
+    diff /usr/sbin/iptables /bin/iptables
+
     sleep $t
 
     echo -e "\n--------------\n > SSH Keys <\n-------------- "
@@ -141,3 +145,5 @@ else
   verbose
   exit 0
 fi
+
+## TODO ##
