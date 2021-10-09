@@ -5,7 +5,7 @@
 
 # sudo find /  -type f -executable -size +1M -exec strings {} + | grep 'go1\.'
 
-echo "Make sure strings is installed"
+echo "!!! Make sure strings is installed !!!"
 
 # Make Array
 files=()

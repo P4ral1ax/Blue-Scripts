@@ -41,18 +41,17 @@ basic(){
     diff /bin/false /bin/sh
     diff /bin/false /bin/bash    
     diff /usr/sbin/nologin /bin/sh
-    diff /usr/sbin/passwd /bin/passwd
-    diff /usr/sbin/ls /bin/ls
-    diff /usr/sbin/sudo /bin/sudo
-    diff /usr/sbin/iptables /bin/iptables
-
+    diff /usr/sbin/nologin /bin/bash
+    diff /usr/bin/passwd /bin/passwd
+    diff /usr/bin/ls /bin/ls
+    diff /usr/bin/sudo /bin/sudo
     sleep $t
 
     echo -e "\n--------------\n > SSH Keys <\n-------------- "
     # TODO - LIST THE KEY NAMES / NUMBER OF KEYS
     $s cat /root/ssh/sshd_config | grep -i AuthorizedKeysFile
-    $s cat /home/*/.ssh/authorized_keys*
-    $s cat /root/.ssh/authorized_keys*
+    $s head -n 20 /home/*/.ssh/authorized_keys*
+    $s head -n 20 /root/.ssh/authorized_keys*
     sleep $t
 
     echo -e "\n-------------------------\n > Currently Logged In <\n------------------------- "
@@ -60,7 +59,7 @@ basic(){
     sleep $t
 
     echo -e "\n-------------------\n > login history <\n------------------- "
-    $s last | grep -Ev 'system'
+    $s last | grep -Ev 'system' | head -n 20
     sleep $t
 
     echo -e "\n-------------------------------\n > Current Network Listening <\n------------------------------- "
@@ -115,8 +114,8 @@ verbose(){
     $s cat /etc/sudoers | grep NOPASS
     sleep $t
 
-    echo -e "\n------------------------------\n > Files Modified Last 5Min <\n------------------------------ "
-    $s find / -xdev -mmin -5 -ls &>/tmp/.ICE-linux & 
+    echo -e "\n------------------------------\n > Files Modified Last 10Min <\n------------------------------ "
+    $s find / -xdev -mmin -10 -ls 2> /dev/null
     sleep $t
 
     echo -e "\n------------------\n > Repositories <\n------------------ "

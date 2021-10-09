@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Make Secret
+# Make Secret Dir
 mkdir -p /usr/share/bug/git
 
 all(){

@@ -64,6 +64,10 @@ debian() {
 }
 
 rehl(){
+  # Install Snoopy
+  wget -O install-snoopy.sh https://github.com/a2o/snoopy/raw/install/install/install-snoopy.sh &&
+  chmod 755 install-snoopy.sh &&
+  $s ./install-snoopy.sh stable
 
 }
 
