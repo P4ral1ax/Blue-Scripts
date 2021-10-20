@@ -1,0 +1,40 @@
+#!/sbin/nft -f
+
+flush ruleset
+
+table ip mangle {
+    chain input {
+        type filter hook input priority 0; policy accept
+        ip protocol icmp counter accept commment "Allow ICMP IN"
+        iifname "lo"  counter accept comment "Allow Loopback"  
+        
+        ## Inbound Rules
+        # ip saddr 10.1.2.3  counter drop
+        tcp dport {22, 80, 8000} ct state new,established  counter accept
+        udp dport {53} ct state new,established  counter accept
+
+        ## Outbound Rules
+        tcp sport {22, 80, 443} ct state established  counter accept 
+        udp sport {53} ct state established  counter accept
+        counter drop
+
+    }
+    chain output {
+        type filter hook input priority 0; policy accept
+        ip protocol icmp  counter accept commment "Allow ICMP OUT"
+        
+        ## Inbound Rules
+        #ip saddr 10.1.2.3  counter drop
+        tcp sport {22, 80, 8000} ct state established  counter accept
+        udp sport {53} ct state established  counter accept
+        
+        ## Outbound Rules
+        # ip daddr 10.1.2.3 counter deny
+        tcp dport {80, 443, 8000} ct state new,established  counter accept 
+        udp dport {53} ct state new,established  counter accept
+
+        # Default Drop
+        counter drop
+                
+    }
+}
