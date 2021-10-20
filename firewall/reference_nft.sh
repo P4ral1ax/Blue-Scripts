@@ -4,7 +4,7 @@
 ## Variables ##
 ###############
 SCORE_IP=10.150.72.1
-nft=/sbin/nftables
+nft=/usr/sbin/nft
 
 ###########
 ## Setup ##
