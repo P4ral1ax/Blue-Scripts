@@ -17,8 +17,8 @@ ${nft} flush ruleset
 # Create table and chains
 echo "> Create Table and Chains"
 ${nft} add table ip mangle
-${nft} add chain ip mangle INPUT { type filter hook input priority -150; policy accept; }
-${nft} add chain ip mangle OUTPUT { type route hook output priority -150; policy accept; }
+${nft} add chain ip mangle INPUT "{ type filter hook input priority -150; policy accept; }"
+${nft} add chain ip mangle OUTPUT "{ type route hook output priority -150; policy accept; }"
 
 
 ################
@@ -54,14 +54,17 @@ ${nft} add rule ip mangle OUTPUT tcp sport 22 ct state established  counter acce
 # ${nft} add rule ip mangle OUTPUT ip daddr ${SCORE_IP} counter accept
 
 # # Allow HTTP Outgoing
+# echo "> Allow Outbound HTTP"
 # ${nft} add rule ip mangle OUTPUT tcp dport 80 ct state new,established  counter accept
 # ${nft} add rule ip mangle INPUT tcp sport 80 ct state established  counter accept
 
 # # Allow HTTP Incoming
+# echo "> Allow Inbound HTTP"
 # ${nft} add rule ip mangle INPUT tcp dport 80 ct state new,established  counter accept
 # ${nft} add rule ip mangle OUTPUT tcp sport 80 ct state established  counter accept
 
 # # Allow HTTPS Outgoing
+# echo "> Allow Outbound HTTPS"
 # ${nft} add rule ip mangle OUTPUT tcp dport 443 ct state new,established  counter accept
 # ${nft} add rule ip mangle INPUT tcp sport 443 ct state established  counter accept
 
