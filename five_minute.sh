@@ -60,7 +60,7 @@ debian() {
   # Reinstall Stuff
   echo '> Reinstalling Hella Stuff'
   sudo apt update
-  sudo apt install --reinstall -y openssh-server lsof dnsutils coreutils net-tools procpsbuild-essential iptables tmux libpam-modules iproute2libssl-dev openssl wireshark
+  sudo apt install --reinstall -y openssh-server lsof dnsutils coreutils net-tools procpsbuild-essential iptables tmux libpam-modules iproute2libssl-dev openssl wireshark shadow
 }
 
 rehl(){
