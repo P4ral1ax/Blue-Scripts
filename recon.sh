@@ -85,7 +85,8 @@ verbose(){
     
     echo -e "\n-------------\n > Auto Runs <\n\n------------- "
     $s cat /etc/crontab | grep -Ev '#|PATH|SHELL'
-    $s cat /etc/cron.d | grep -Ev '#|PATH|SHELL'
+    $s cat /etc/cron.d/* | grep -Ev '#|PATH|SHELL'
+    $s find /var/spool/cron/crontabs/ -printf '%p\n' -exec cat {} \;
     $s systemctl list-timers
     sleep $t
 
@@ -121,6 +122,7 @@ verbose(){
     echo -e "\n------------------\n > Repositories <\n------------------ "
     $s cat /etc/apt/sources.list | grep -Ev "##|#"
     sleep $t
+
 }
 
 # Get User Input to get sleep time and Type
